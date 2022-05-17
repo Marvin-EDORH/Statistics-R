@@ -148,8 +148,6 @@ summary(anovanswre75<-aov(nsw$re75 ~ nsw$treat))
 
 #############################################  Regression linéaire ################################################################
 
-library(readxl)
-
 summary(lm (formula = DATA_1$`Satisfaction` ~ DATA_1$`Age` 
                                             + DATA_1$`Price Sensitivity`
                                             + DATA_1$`Flight time in minutes`
