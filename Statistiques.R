@@ -18,7 +18,6 @@ install.packages("plyr")
 library(plyr)
 DATA_summarize <- ddply(.data = DATA_1, .variables = .(Gender), .fun = summarize, min = min(Age), moy = mean(Age), max=max(Age))
 
-
 DATA_mean <- aggregate(DATA_1$Age, by=list(Category=DATA_1$Gender), FUN=mean)
 DATA_min <- aggregate(Age ~ Gender, DATA_1, FUN=min)
 DATA_max <- aggregate(Age ~ Gender, DATA_1, FUN=max)
@@ -145,8 +144,9 @@ nsw <- read.csv("nsw.csv", sep=";",header = TRUE)
 
 summary(anovanswre75<-aov(nsw$re75 ~ nsw$treat))
 
-
 #############################################  Regression linéaire ################################################################
+
+library(readxl)
 
 summary(lm (formula = DATA_1$`Satisfaction` ~ DATA_1$`Age` 
                                             + DATA_1$`Price Sensitivity`
@@ -169,16 +169,9 @@ summary(glm(DATA_1$Satisfaction ~ DATA_1$Gender
 install.packages("dplyr")
 library(dplyr)
 
-DATA_1 <- DATA_1 %>%
-  mutate(
-    `Satisfaction Top2` = case_when(
-      `Satisfaction Top2` == 'yes'  ~ 1,
-      `Satisfaction Top2` == 'no' ~ 0
-    )
-  )
+DATA_1 <- DATA_1 %>% mutate(`Satisfaction Top2` = case_when(`Satisfaction Top2` == 'yes'~ 1,`Satisfaction Top2` == 'no' ~ 0))
 
-reglog <- glm(`Satisfaction Top2` ~ Gender + Class + `Flight cancelled` + `Type of Travel` + `Arrival Delay greater 5 Mins`, 
-              DATA_1, family = binomial(logit))
+reglog <- glm(`Satisfaction Top2` ~ Gender + Class + `Flight cancelled` + `Type of Travel` + `Arrival Delay greater 5 Mins`, DATA_1, family = binomial(logit))
 
 summary(reglog)
 
