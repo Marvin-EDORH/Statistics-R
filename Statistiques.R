@@ -101,9 +101,22 @@ ggplot(DATA_1, aes(x=factor(1), fill=Gender)) + geom_bar(width = 1) + coord_pola
 
 ########################################################## KHI-2 ##################################################################
 
+library(sqldf)
+x <- sqldf("SELECT Gender, `Airline status`, COUNT (*) as count FROM DATA_1 GROUP BY Gender, `Airline status`")
+x_1 <- sqldf("SELECT Gender, COUNT (*) as count FROM DATA_1 GROUP BY Gender")
+x_2 <- sqldf("SELECT x.Gender, `Airline status`,x.count as count_1 , x_1.count as count_2 FROM x LEFT JOIN x_1 USING (Gender)")
+library(dplyr)
+x_3 <- x_2 %>% mutate(percent_Gender = count_1/count_2)
+graph_7 <- ggplot(x_3, aes(x=Gender, y = percent_Gender))
+graph_7 + geom_col(aes(fill = `Airline status`))
+
 table(DATA_1$Gender,DATA_1$`Airline status`)
 
 prop.table(table(DATA_1$Gender,DATA_1$`Airline status`))
+
+prop.table(table(DATA_1$Gender,DATA_1$`Airline status`),1)
+
+prop.table(table(DATA_1$Gender,DATA_1$`Airline status`),2)
 
 summary(table(DATA_1$Gender,DATA_1$`Airline status`))
 
