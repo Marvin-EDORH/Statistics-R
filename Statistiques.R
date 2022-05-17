@@ -14,7 +14,7 @@ mean(DATA_1$Age)
 
 DATA_groupby <- aggregate(Age ~ Gender + `Satisfaction Top2`, DATA_1, FUN=min)
 
-install.packages("plyr")
+#install.packages("plyr")
 library(plyr)
 DATA_summarize <- ddply(.data = DATA_1, .variables = .(Gender), .fun = summarize, min = min(Age), moy = mean(Age), max=max(Age))
 
@@ -40,7 +40,7 @@ hist(table(DATA_1$Age))
 boxplot(DATA_1$Age~DATA_1$Gender)
 plot(DATA_1$Satisfaction~DATA_1$Age)
 
-install.packages("ggplot2")
+#install.packages("ggplot2")
 library(ggplot2)
 
 # synthaxe ggplot2 : 
@@ -163,7 +163,7 @@ summary(glm(DATA_1$Satisfaction ~ DATA_1$Gender
                                 + DATA_1$`Arrival Delay greater 5 Mins`))
 
 ############################################# Regression Logistique ##############################################################
-install.packages("dplyr")
+#install.packages("dplyr")
 library(dplyr)
 
 DATA_1 <- DATA_1 %>% mutate(`Satisfaction Top2` = case_when(`Satisfaction Top2` == 'yes'~ 1,`Satisfaction Top2` == 'no' ~ 0))
