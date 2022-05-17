@@ -63,7 +63,6 @@ graph_1 + geom_boxplot (size = 1) #on modifie la taille
 graph_1 + geom_boxplot (size = 1, width = 0.1) #on modifie l'écart
 graph_1 + geom_boxplot () + scale_y_continuous(breaks = seq(0, 100, by = 10)) #on modifie l'echelle de l'axe
 
-
 #nuage de points 
 graph_2 <- ggplot(DATA_1, aes(x=Age, y=Satisfaction, color = Gender)) 
 graph_2 <- ggplot(DATA_1, aes(x=Age, y=`Flight Distance`)) 
@@ -105,17 +104,15 @@ x <- sqldf("SELECT Gender, `Airline status`, COUNT (*) as count FROM DATA_1 GROU
 x_1 <- sqldf("SELECT Gender, COUNT (*) as count FROM DATA_1 GROUP BY Gender")
 x_2 <- sqldf("SELECT x.Gender, `Airline status`,x.count as count_1 , x_1.count as count_2 FROM x LEFT JOIN x_1 USING (Gender)")
 library(dplyr)
-x_3 <- x_2 %>% mutate(status_by_gender = count_1/count_2)
-graph_7 <- ggplot(x_3, aes(x=Gender, y = status_by_gender))
+x_3 <- x_2 %>% mutate(percent_Gender = count_1/count_2)
+graph_7 <- ggplot(x_3, aes(x=Gender, y = percent_Gender))
 graph_7 + geom_col(aes(fill = `Airline status`))
 
 table(DATA_1$Gender,DATA_1$`Airline status`)
 
 prop.table(table(DATA_1$Gender,DATA_1$`Airline status`))
 
-prop.table(table(DATA_1$Gender,DATA_1$`Airline status`),1)
-
-prop.table(table(DATA_1$Gender,DATA_1$`Airline status`),2)
+prop.table(table(DATA_1$Gender,DATA_1$`Airline status`),1) #1:ligne, 2:colonne
 
 summary(table(DATA_1$Gender,DATA_1$`Airline status`))
 
